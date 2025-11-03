@@ -33,7 +33,7 @@ public class LottoParser {
         try {
             return new BigDecimal(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_AMOUNT.message());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BUDGET.message());
         }
     }
 }
