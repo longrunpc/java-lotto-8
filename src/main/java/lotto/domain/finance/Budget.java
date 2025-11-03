@@ -12,9 +12,9 @@ public class Budget {
         this.amount = amount;
     }
 
-    public static Budget create(String amount) {
-        BudgetValidator.validateBudget(new BigDecimal(amount));
-        return new Budget(new BigDecimal(amount));
+    public static Budget create(BigDecimal amount) {
+        BudgetValidator.validateBudget(amount);
+        return new Budget(amount);
     }
 
     public int calculateLottoCount() {
