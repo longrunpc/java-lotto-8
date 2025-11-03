@@ -3,6 +3,7 @@ package lotto.common.message;
 public enum ErrorMessage {
     INVALID_PURCHASE_AMOUNT("[ERROR] 구입 금액은 0원 이상이어야 합니다."),
     INVALID_PURCHASE_AMOUNT_UNIT("[ERROR] 구입 금액은 1000원 단위로 입력해야 합니다."),
+    EXCEEDED_PURCHASE_LIMIT("[ERROR] 구입 가능한 로또 개수는 2,147,483,647개 입니다."),
 
     INVALID_LOTTO_SIZE("[ERROR] 로또 번호는 6개여야 합니다."),
 
