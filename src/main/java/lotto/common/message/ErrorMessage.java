@@ -13,7 +13,10 @@ public enum ErrorMessage {
 
     INVALID_LOTTO_NUMBER_RANGE("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다."),
     INVALID_LOTTO_NUMBER_DUPLICATE("[ERROR] 로또 번호는 중복되지 않아야 합니다."),
-    INVALID_BONUS_NUMBER_DUPLICATE("[ERROR] 보너스 번호는 당첨번호와 중복되지 않아야 합니다.");
+    INVALID_BONUS_NUMBER_DUPLICATE("[ERROR] 보너스 번호는 당첨번호와 중복되지 않아야 합니다."),
+
+    INVALID_LOTTO_CONTROLLER_DEPENDENCY("[ERROR] LottoController 생성에 필요한 의존성이 주입되지 않았습니다."),
+    INVALID_LOTTO_CONTROLLER_INJECTION("[ERROR] LottoController 의존성 주입에 실패했습니다.");
 
     private final String message;
 

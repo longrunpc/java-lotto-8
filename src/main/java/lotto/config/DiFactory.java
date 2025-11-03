@@ -1,5 +1,6 @@
 package lotto.config;
 
+import lotto.common.message.ErrorMessage;
 import lotto.controller.LottoController;
 import lotto.domain.lotto.LottoGenerator;
 import lotto.domain.lotto.RandomLottoGenerator;
@@ -14,19 +15,27 @@ public class DiFactory {
     }
 
     public static LottoController createLottoController() {
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
-        LottoGenerator lottoGenerator = RandomLottoGenerator.getInstance();
-        LottoParser lottoParser = new LottoParser();
-        BudgetParser budgetParser = new BudgetParser();
-    
-        return new LottoController(
-            inputView,
-            outputView,
-            lottoGenerator,
-            lottoParser,
-            budgetParser
-        );
+        try {
+            InputView inputView = new InputView();
+            OutputView outputView = new OutputView();
+            LottoGenerator lottoGenerator = RandomLottoGenerator.getInstance();
+            LottoParser lottoParser = new LottoParser();
+            BudgetParser budgetParser = new BudgetParser();
+
+            if (lottoGenerator == null || lottoParser == null || budgetParser == null) {
+                throw new IllegalStateException(ErrorMessage.INVALID_LOTTO_CONTROLLER_DEPENDENCY.message());
+            }
+
+            return new LottoController(
+                inputView,
+                outputView,
+                lottoGenerator,
+                lottoParser,
+                budgetParser
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(ErrorMessage.INVALID_LOTTO_CONTROLLER_INJECTION.message());
+        }
     }
     
 }
