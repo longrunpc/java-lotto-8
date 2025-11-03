@@ -1,5 +1,6 @@
 package lotto.domain.winning;
 
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class WinningResult {
     public WinningReport toReport() {
         List<WinningReportEntry> entries = rankCounts.entrySet().stream()
             .filter(entry -> entry.getKey() != Rank.MISS)
+            .sorted(Comparator.comparingInt(entry -> entry.getKey().getMatchCount()))
             .map(entry -> {
                 Rank rank = entry.getKey();
                 int count = entry.getValue();
