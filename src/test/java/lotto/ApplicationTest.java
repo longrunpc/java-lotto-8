@@ -47,6 +47,79 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    void 구입_금액_재입력_테스트() {
+        assertRandomUniqueNumbersInRangeTest(
+            () -> {
+                // 💬 첫 입력 "1000a" → 에러, 두 번째 입력 "8000" → 정상 진행
+                run("1002", "8000", "1,2,3,4,5,6", "7");
+
+                assertThat(output()).contains(
+                    "[ERROR]",
+                    "구입 금액을 입력해 주세요.",
+                    "8개를 구매했습니다.",
+                    "당첨 통계",
+                    "총 수익률은"
+                );
+            },
+            List.of(8, 21, 23, 41, 42, 43),
+            List.of(3, 5, 11, 16, 32, 38),
+            List.of(7, 11, 16, 35, 36, 44),
+            List.of(1, 8, 11, 31, 41, 42),
+            List.of(13, 14, 16, 38, 42, 45),
+            List.of(7, 11, 30, 40, 42, 43),
+            List.of(2, 13, 22, 32, 38, 45),
+            List.of(1, 3, 5, 14, 22, 45)
+        );
+    }
+
+    @Test
+    void 당첨번호_재입력_테스트() {
+        assertRandomUniqueNumbersInRangeTest(
+            () -> {
+                // 💬 첫 입력 "1,2,3,4,5" → 에러, 두 번째 입력 "1,2,3,4,5,6" → 정상
+                run("8000", "1,2,3,4,5", "1,2,3,4,5,6", "7");
+
+                assertThat(output()).contains(
+                    "[ERROR]", 
+                    "당첨 번호를 입력해 주세요.", // 재입력 요청 메시지
+                    "보너스 번호를 입력해 주세요.", // 정상 흐름 진행
+                    "당첨 통계"
+                );
+            },
+            List.of(8, 21, 23, 41, 42, 43),
+            List.of(3, 5, 11, 16, 32, 38),
+            List.of(7, 11, 16, 35, 36, 44),
+            List.of(1, 8, 11, 31, 41, 42),
+            List.of(13, 14, 16, 38, 42, 45),
+            List.of(7, 11, 30, 40, 42, 43),
+            List.of(2, 13, 22, 32, 38, 45),
+            List.of(1, 3, 5, 14, 22, 45)
+        );
+    }
+
+    @Test
+    void 보너스_번호_재입력_테스트() {
+        assertRandomUniqueNumbersInRangeTest(
+            () -> {
+                run("8000", "1,2,3,4,5,6", "a", "7");
+                assertThat(output()).containsSubsequence(
+                    "[ERROR]",
+                    "보너스 번호를 입력해 주세요.",
+                    "당첨 통계"
+                );
+            },
+            List.of(8, 21, 23, 41, 42, 43),
+            List.of(3, 5, 11, 16, 32, 38),
+            List.of(7, 11, 16, 35, 36, 44),
+            List.of(1, 8, 11, 31, 41, 42),
+            List.of(13, 14, 16, 38, 42, 45),
+            List.of(7, 11, 30, 40, 42, 43),
+            List.of(2, 13, 22, 32, 38, 45),
+            List.of(1, 3, 5, 14, 22, 45)
+        );
+    }
+
+    @Test
     void 예외_테스트() {
         assertSimpleTest(() -> {
             runException("1000j");
