@@ -3,7 +3,7 @@ package lotto.domain.finance;
 import java.math.BigDecimal;
 
 import lotto.common.constant.LottoConstant;
-import lotto.util.validator.LottoValidator;
+import lotto.util.validator.BudgetValidator;
 
 public class Budget {
     private final BigDecimal amount;
@@ -13,7 +13,7 @@ public class Budget {
     }
 
     public static Budget create(String amount) {
-        LottoValidator.validateBudget(new BigDecimal(amount));
+        BudgetValidator.validateBudget(new BigDecimal(amount));
         return new Budget(new BigDecimal(amount));
     }
 
