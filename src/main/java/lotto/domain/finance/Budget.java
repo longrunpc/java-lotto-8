@@ -20,4 +20,8 @@ public class Budget {
     public int calculateLottoCount() {
         return amount.divide(BigDecimal.valueOf(LottoConstant.LOTTO_PRICE)).intValue();
     }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
 }

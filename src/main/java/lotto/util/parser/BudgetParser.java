@@ -7,7 +7,7 @@ import lotto.common.message.ErrorMessage;
 public class BudgetParser {
     private BudgetParser() {}  
 
-    public static BigDecimal parseBudget(String input) {
+    public BigDecimal parseBudget(String input) {
         try {
             return new BigDecimal(input);
         } catch (NumberFormatException e) {

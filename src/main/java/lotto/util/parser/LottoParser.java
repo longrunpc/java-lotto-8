@@ -9,7 +9,7 @@ import lotto.common.message.ErrorMessage;
 public class LottoParser {
     private static final String DELIMITER = ",";
 
-    public static List<Integer> parseWinningNumbers(String input) {
+    public List<Integer> parseWinningNumbers(String input) {
         try {
             return Arrays.stream(input.split(DELIMITER))
                     .map(String::trim)
@@ -20,7 +20,7 @@ public class LottoParser {
         }
     }
 
-    public static int parseBonusNumber(String input) {
+    public int parseBonusNumber(String input) {
         try {
             return Integer.parseInt(input.trim());
         } catch (NumberFormatException e) {
