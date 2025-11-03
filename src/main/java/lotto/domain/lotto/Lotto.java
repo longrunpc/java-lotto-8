@@ -1,5 +1,6 @@
 package lotto.domain.lotto;
 
+import java.util.Comparator;
 import java.util.List;
 
 import lotto.dto.PurchasedLotto;
@@ -22,6 +23,12 @@ public class Lotto {
     }
 
     public PurchasedLotto toPurchasedLotto() {
-        return new PurchasedLotto(List.copyOf(numbers));
+        return new PurchasedLotto(sorted());
+    }
+
+    private List<Integer> sorted() {
+        return numbers.stream()
+            .sorted(Comparator.naturalOrder())
+            .toList();
     }
 }
