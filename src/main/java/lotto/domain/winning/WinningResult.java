@@ -1,5 +1,6 @@
 package lotto.domain.winning;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
@@ -28,6 +29,16 @@ public class WinningResult {
         }
 
         return new WinningResult(counts);
+    }
+
+    public BigDecimal calculateTotalPrize() {
+        return rankCounts.entrySet().stream()
+            .map(entry -> {
+                BigDecimal prize = BigDecimal.valueOf(entry.getKey().getPrize());
+                BigDecimal count = BigDecimal.valueOf(entry.getValue());
+                return prize.multiply(count);
+            })
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public WinningReport toReport() {
