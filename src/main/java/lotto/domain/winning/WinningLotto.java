@@ -20,11 +20,13 @@ public class WinningLotto {
         return new WinningLotto(new Lotto(winningNumbers), bonusNumber);
     }
 
-    public int countMatch(Lotto lotto) {
-        return (int) lotto.getNumbers()
+    public Rank countMatch(Lotto lotto) {
+        int matchCount = (int) lotto.getNumbers()
                 .stream()
                 .filter(winningLotto::contains)
                 .count();
+
+        return Rank.of(matchCount, isBonusMatch(lotto));
     }
 
     public boolean isBonusMatch(Lotto lotto) {
