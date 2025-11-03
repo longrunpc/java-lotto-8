@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Profit {
-    private static final int SCALE = 2;
+    private static final int SCALE = 1;
     private final BigDecimal rate;
 
     private Profit(BigDecimal totalReward, BigDecimal totalPurchaseAmount) {
