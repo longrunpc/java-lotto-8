@@ -3,7 +3,6 @@ package lotto.domain.finance;
 import lotto.common.message.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -25,7 +24,7 @@ class BudgetTest {
                 "10000, 10",
                 "100000, 100"
         })
-        void should_create_Budget_when_amount_is_valid(int amount, int expectedCount) {
+        void should_create_Budget_when_amount_is_valid(String amount, int expectedCount) {
             // when
             Budget budget = Budget.create(amount);
 
@@ -36,8 +35,8 @@ class BudgetTest {
 
         @DisplayName("최소 구매 금액보다 작은 금액이면 예외가 발생한다.")
         @ParameterizedTest
-        @ValueSource(ints = {-1000, -500, -100, -10})
-        void should_throw_exception_when_amount_is_less_than_minimum(int amount) {
+        @ValueSource(strings = {"-1000", "-500", "-100", "-10"})
+        void should_throw_exception_when_amount_is_less_than_minimum(String amount) {
             // when & then
             assertThatThrownBy(() -> Budget.create(amount))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -46,8 +45,8 @@ class BudgetTest {
 
         @DisplayName("로또 가격의 배수가 아닌 금액이면 예외가 발생한다.")
         @ParameterizedTest
-        @ValueSource(ints = {1500, 2500, 3300, 5500, 9999})
-        void should_throw_exception_when_amount_is_not_multiple_of_lotto_price(int amount) {
+        @ValueSource(strings = {"1500", "2500", "3300", "5500", "9999"})
+        void should_throw_exception_when_amount_is_not_multiple_of_lotto_price(String amount) {
             // when & then
             assertThatThrownBy(() -> Budget.create(amount))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -68,7 +67,7 @@ class BudgetTest {
                 "100000, 100",
                 "500000, 500"
         })
-        void should_calculate_lotto_count_correctly(int amount, int expectedCount) {
+        void should_calculate_lotto_count_correctly(String amount, int expectedCount) {
             // given
             Budget budget = Budget.create(amount);
 
