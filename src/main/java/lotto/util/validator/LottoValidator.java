@@ -1,5 +1,6 @@
 package lotto.util.validator;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import lotto.common.constant.LottoConstant;
@@ -41,6 +42,23 @@ public final class LottoValidator {
     private static void validateDuplicate(List<Integer> numbers) {
         if (numbers.stream().distinct().count() != numbers.size()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER_DUPLICATE.message());
+        }
+    }
+
+    public static void validateBudget(BigDecimal amount) {
+        validateBudgetAmount(amount);
+        validateBudgetAmountUnit(amount);
+    }
+
+    private static void validateBudgetAmount(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.valueOf(LottoConstant.MIN_PURCHASE_AMOUNT)) < 0) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_AMOUNT.message());
+        }
+    }
+
+    private static void validateBudgetAmountUnit(BigDecimal amount) {
+        if (amount.remainder(BigDecimal.valueOf(LottoConstant.LOTTO_PRICE)).compareTo(BigDecimal.ZERO) != 0) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_AMOUNT_UNIT.message());
         }
     }
 }
