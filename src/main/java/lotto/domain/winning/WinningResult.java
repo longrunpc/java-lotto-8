@@ -33,7 +33,10 @@ public class WinningResult {
     public WinningReport toReport() {
         List<WinningReportEntry> entries = rankCounts.entrySet().stream()
             .filter(entry -> entry.getKey() != Rank.MISS)
-            .sorted(Comparator.comparingInt(entry -> entry.getKey().getMatchCount()))
+            .sorted(Comparator
+                .comparingInt((Map.Entry<Rank, Integer> e) -> e.getKey().getMatchCount())
+                .thenComparing(e -> e.getKey().hasBonus())
+            )
             .map(entry -> {
                 Rank rank = entry.getKey();
                 int count = entry.getValue();
