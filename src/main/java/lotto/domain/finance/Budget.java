@@ -24,4 +24,8 @@ public class Budget {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_AMOUNT_UNIT.message());
         }
     }
+
+    public int calculateLottoCount() {
+        return amount / LottoConstant.LOTTO_PRICE;
+    }
 }
