@@ -15,7 +15,7 @@ public class BudgetValidator {
     }
 
     private static void validateBudgetAmount(BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.valueOf(LottoConstant.MIN_PURCHASE_AMOUNT)) < 0) {
+        if (amount.compareTo(BigDecimal.valueOf(LottoConstant.MIN_PURCHASE_AMOUNT)) <= 0) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_AMOUNT.message());
         }
     }
