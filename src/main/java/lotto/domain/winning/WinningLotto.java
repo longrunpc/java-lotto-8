@@ -1,13 +1,22 @@
 package lotto.domain.winning;
 
+import java.util.List;
+
 import lotto.domain.lotto.Lotto;
+import lotto.util.validator.LottoValidator;
 
 public class WinningLotto {
-    private final Lotto winningNumbers;
+    private final Lotto winningLotto;
     private final int bonusNumber;
 
-    public WinningLotto(Lotto winningNumbers, int bonusNumber) {
-        this.winningNumbers = winningNumbers;
+    private WinningLotto(Lotto winningLotto, int bonusNumber) {
+        this.winningLotto = winningLotto;
         this.bonusNumber = bonusNumber;
+    }
+
+    public static WinningLotto create(List<Integer> winningNumbers, int bonusNumber) {
+        LottoValidator.validateWinningNumbers(winningNumbers);
+        LottoValidator.validateBonusNumber(bonusNumber);
+        return new WinningLotto(new Lotto(winningNumbers), bonusNumber);
     }
 }
