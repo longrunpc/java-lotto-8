@@ -1,6 +1,8 @@
 package lotto.util.parser;
 
 import lotto.common.message.ErrorMessage;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BudgetParserTest {
+    private BudgetParser budgetParser;
+
+    @BeforeEach
+    void setUp() {
+        budgetParser = new BudgetParser();
+    }
 
     @Nested
     @DisplayName("예산 파싱")
@@ -27,7 +35,7 @@ class BudgetParserTest {
                 "123456, 123456"
         })
         void should_parse_numeric_string_to_bigdecimal(String input, String expected) {
-            BigDecimal result = BudgetParser.parseBudget(input);
+            BigDecimal result = budgetParser.parseBudget(input);
             assertThat(result).isEqualByComparingTo(new BigDecimal(expected));
         }
 
@@ -35,7 +43,7 @@ class BudgetParserTest {
         @ParameterizedTest
         @ValueSource(strings = {"", " ", "abc", "1000a", "-", "+", "1,000"})
         void should_throw_exception_when_input_is_not_numeric(String input) {
-            assertThatThrownBy(() -> BudgetParser.parseBudget(input))
+            assertThatThrownBy(() -> budgetParser.parseBudget(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
