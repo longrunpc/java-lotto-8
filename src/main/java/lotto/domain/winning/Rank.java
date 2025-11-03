@@ -2,6 +2,8 @@ package lotto.domain.winning;
 
 import java.util.Arrays;
 
+import lotto.common.constant.LottoConstant;
+
 public enum Rank {
     FIRST(6, false, 2_000_000_000),
     SECOND(5, true, 30_000_000),
@@ -9,8 +11,6 @@ public enum Rank {
     FOURTH(4, false, 50_000),
     FIFTH(3, false, 5_000),
     MISS(0, false, 0);
-
-    private static final int BONUS_CONDITION_MATCH_COUNT = 5;
 
     private final int matchCount;
     private final boolean bonusMatch;
@@ -31,7 +31,7 @@ public enum Rank {
     }
 
     private static boolean isBonusCondition(int matchCount) {
-        return matchCount == BONUS_CONDITION_MATCH_COUNT;
+        return matchCount == LottoConstant.BONUS_CONDITION_MATCH_COUNT;
     }
 
     private static Rank findRankWithBonusCondition(boolean bonusMatched) {
