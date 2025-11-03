@@ -54,5 +54,30 @@ class BudgetTest {
                     .hasMessage(ErrorMessage.INVALID_PURCHASE_AMOUNT_UNIT.message());
         }
     }
+
+    @Nested
+    @DisplayName("로또 개수 계산")
+    class CalculateLottoCountTest {
+
+        @DisplayName("calculateLottoCount는 정확한 로또 개수를 계산한다.")
+        @ParameterizedTest
+        @CsvSource({
+                "1000, 1",
+                "5000, 5",
+                "10000, 10",
+                "100000, 100",
+                "500000, 500"
+        })
+        void should_calculate_lotto_count_correctly(int amount, int expectedCount) {
+            // given
+            Budget budget = Budget.create(amount);
+
+            // when
+            int lottoCount = budget.calculateLottoCount();
+
+            // then
+            assertThat(lottoCount).isEqualTo(expectedCount);
+        }
+    }
 }
 
