@@ -14,11 +14,23 @@ public final class LottoValidator {
         validateDuplicate(numbers);
     }
 
-    public static void validateBonusNumber(int bonusNumber) {
+    public static void validateBonusNumber(List<Integer> winningNumbers, int bonusNumber) {
+        validateBonusNumberRange(bonusNumber);
+        validateBonusNumberDuplicate(winningNumbers, bonusNumber);
+    }
+    
+    private static void validateBonusNumberRange(int bonusNumber) {
         if (bonusNumber < LottoConstant.LOTTO_START_NUMBER || bonusNumber > LottoConstant.LOTTO_END_NUMBER) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_BONUS_NUMBER.message());
         }
     }
+    
+    private static void validateBonusNumberDuplicate(List<Integer> winningNumbers, int bonusNumber) {
+        if (winningNumbers.contains(bonusNumber)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BONUS_NUMBER_DUPLICATE.message());
+        }
+    }
+    
 
     public static void validateWinningNumbers(List<Integer> numbers) {
         validateSize(numbers);

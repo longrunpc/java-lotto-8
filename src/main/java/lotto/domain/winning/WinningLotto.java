@@ -15,8 +15,6 @@ public class WinningLotto {
     }
 
     public static WinningLotto create(List<Integer> winningNumbers, int bonusNumber) {
-        LottoValidator.validateWinningNumbers(winningNumbers);
-        LottoValidator.validateBonusNumber(bonusNumber);
         return new WinningLotto(new Lotto(winningNumbers), bonusNumber);
     }
 

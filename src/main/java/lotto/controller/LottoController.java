@@ -1,6 +1,7 @@
 package lotto.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import lotto.domain.finance.Budget;
 import lotto.domain.finance.Profit;
@@ -11,6 +12,7 @@ import lotto.domain.winning.WinningResult;
 import lotto.dto.WinningReport;
 import lotto.util.parser.BudgetParser;
 import lotto.util.parser.LottoParser;
+import lotto.util.validator.LottoValidator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
@@ -63,33 +65,35 @@ public class LottoController {
     }
 
     private WinningLotto requestWinningLotto() {
-        String rawWinningNumbers = requestWinningNumbers();
-        String rawBonusNumber = requestBonusNumber();
+        List<Integer> winningNumbers = requestWinningNumbers();
+        int bonusNumber = requestBonusNumber(winningNumbers);
     
         return WinningLotto.create(
-            lottoParser.parseWinningNumbers(rawWinningNumbers),
-            lottoParser.parseBonusNumber(rawBonusNumber)
+            winningNumbers,
+            bonusNumber
         );
     }
     
-    private String requestWinningNumbers() {
+    private List<Integer> requestWinningNumbers() {
         while (true) {
             try {
                 String input = inputView.readWinningNumbers();
-                lottoParser.parseWinningNumbers(input);
-                return input;
+                List<Integer> winningNumbers = lottoParser.parseWinningNumbers(input);
+                LottoValidator.validateWinningNumbers(winningNumbers);
+                return winningNumbers;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
     
-    private String requestBonusNumber() {
+    private int requestBonusNumber(List<Integer> winningNumbers) {
         while (true) {
             try {
                 String input = inputView.readBonusNumber();
-                lottoParser.parseBonusNumber(input);
-                return input;
+                int bonusNumber = lottoParser.parseBonusNumber(input);
+                LottoValidator.validateBonusNumber(winningNumbers, bonusNumber);
+                return bonusNumber;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
