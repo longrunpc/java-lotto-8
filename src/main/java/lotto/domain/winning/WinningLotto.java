@@ -19,4 +19,15 @@ public class WinningLotto {
         LottoValidator.validateBonusNumber(bonusNumber);
         return new WinningLotto(new Lotto(winningNumbers), bonusNumber);
     }
+
+    public int countMatch(Lotto lotto) {
+        return (int) lotto.getNumbers()
+                .stream()
+                .filter(winningLotto::contains)
+                .count();
+    }
+
+    public boolean isBonusMatch(Lotto lotto) {
+        return lotto.contains(bonusNumber);
+    }
 }
