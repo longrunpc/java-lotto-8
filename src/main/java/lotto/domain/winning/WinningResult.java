@@ -1,6 +1,7 @@
 package lotto.domain.winning;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.List;
@@ -42,15 +43,14 @@ public class WinningResult {
     }
 
     public WinningReport toReport() {
-        List<WinningReportEntry> entries = rankCounts.entrySet().stream()
-            .filter(entry -> entry.getKey() != Rank.MISS)
+        List<WinningReportEntry> entries = Arrays.stream(Rank.values())
+            .filter(rank -> rank != Rank.MISS)
             .sorted(Comparator
-                .comparingInt((Map.Entry<Rank, Integer> e) -> e.getKey().getMatchCount())
-                .thenComparing(e -> e.getKey().hasBonus())
+                .comparingInt(Rank::getMatchCount)
+                .thenComparing(Rank::hasBonus)
             )
-            .map(entry -> {
-                Rank rank = entry.getKey();
-                int count = entry.getValue();
+            .map(rank -> {
+                int count = rankCounts.getOrDefault(rank, 0);
                 return new WinningReportEntry(
                     rank.getMatchCount(),
                     rank.hasBonus(),
@@ -62,5 +62,4 @@ public class WinningResult {
     
         return new WinningReport(entries);
     }
-    
 }

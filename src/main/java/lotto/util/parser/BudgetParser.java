@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import lotto.common.message.ErrorMessage;
 
 public class BudgetParser {
-    private BudgetParser() {}  
-
     public BigDecimal parseBudget(String input) {
         try {
             return new BigDecimal(input);
