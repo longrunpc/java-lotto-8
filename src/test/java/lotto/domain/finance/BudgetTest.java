@@ -10,6 +10,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.math.BigDecimal;
+
 class BudgetTest {
 
     @Nested
@@ -26,7 +28,7 @@ class BudgetTest {
         })
         void should_create_Budget_when_amount_is_valid(String amount, int expectedCount) {
             // when
-            Budget budget = Budget.create(amount);
+            Budget budget = Budget.create(new BigDecimal(amount));
 
             // then
             assertThat(budget).isNotNull();
@@ -38,7 +40,7 @@ class BudgetTest {
         @ValueSource(strings = {"-1000", "-500", "-100", "-10"})
         void should_throw_exception_when_amount_is_less_than_minimum(String amount) {
             // when & then
-            assertThatThrownBy(() -> Budget.create(amount))
+            assertThatThrownBy(() -> Budget.create(new BigDecimal(amount)))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ErrorMessage.INVALID_PURCHASE_AMOUNT.message());
         }
@@ -48,7 +50,7 @@ class BudgetTest {
         @ValueSource(strings = {"1500", "2500", "3300", "5500", "9999"})
         void should_throw_exception_when_amount_is_not_multiple_of_lotto_price(String amount) {
             // when & then
-            assertThatThrownBy(() -> Budget.create(amount))
+            assertThatThrownBy(() -> Budget.create(new BigDecimal(amount)))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ErrorMessage.INVALID_PURCHASE_AMOUNT_UNIT.message());
         }
@@ -69,7 +71,7 @@ class BudgetTest {
         })
         void should_calculate_lotto_count_correctly(String amount, int expectedCount) {
             // given
-            Budget budget = Budget.create(amount);
+            Budget budget = Budget.create(new BigDecimal(amount));
 
             // when
             int lottoCount = budget.calculateLottoCount();
