@@ -6,7 +6,8 @@ public enum ErrorMessage {
 
     INVALID_LOTTO_SIZE("[ERROR] 로또 번호는 6개여야 합니다."),
 
-    INVALID_WINNING_NUMBERS("[ERROR] 당첨번호 숫자 형식이 올바르지 않습니다.");
+    INVALID_WINNING_NUMBERS("[ERROR] 당첨번호 형식이 올바르지 않습니다."),
+    INVALID_BONUS_NUMBER("[ERROR] 보너스 번호 형식이 올바르지 않습니다.");
 
     private final String message;
 

@@ -19,4 +19,12 @@ public class LottoParser {
             throw new IllegalArgumentException(ErrorMessage.INVALID_WINNING_NUMBERS.message());
         }
     }
+
+    public static int parseBonusNumber(String input) {
+        try {
+            return Integer.parseInt(input.trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BONUS_NUMBER.message());
+        }
+    }
 }
