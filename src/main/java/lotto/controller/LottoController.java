@@ -37,22 +37,43 @@ public class LottoController {
     }
 
     public void run() {
-        Budget budget = Budget.create(budgetParser.parseBudget(inputView.readPurchaseAmount()));
+        Budget budget = requestBudget();
+        Lottos lottos = purchaseLottos(budget);
+        WinningLotto winningLotto = requestWinningLotto();
+        WinningResult result = calculateWinningResult(lottos, winningLotto);
+        printResult(result, budget);
+    }
 
+    private Budget requestBudget() {
+        String rawAmount = inputView.readPurchaseAmount();
+        BigDecimal parsedAmount = budgetParser.parseBudget(rawAmount);
+        return Budget.create(parsedAmount);
+    }
+
+    private Lottos purchaseLottos(Budget budget) {
         Lottos lottos = Lottos.generate(budget.calculateLottoCount(), lottoGenerator);
         outputView.printLottos(lottos.toPurchasedLottos());
+        return lottos;
+    }
 
-        WinningLotto winningLotto = WinningLotto.create(
-            lottoParser.parseWinningNumbers(inputView.readWinningNumbers()),
-            lottoParser.parseBonusNumber(inputView.readBonusNumber())
+    private WinningLotto requestWinningLotto() {
+        String rawWinningNumbers = inputView.readWinningNumbers();
+        String rawBonusNumber = inputView.readBonusNumber();
+
+        return WinningLotto.create(
+            lottoParser.parseWinningNumbers(rawWinningNumbers),
+            lottoParser.parseBonusNumber(rawBonusNumber)
         );
+    }
 
-        WinningResult winningResult = WinningResult.from(lottos, winningLotto);
-        WinningReport report = winningResult.toReport();
+    private WinningResult calculateWinningResult(Lottos lottos, WinningLotto winningLotto) {
+        return WinningResult.from(lottos, winningLotto);
+    }
 
-        BigDecimal totalPrize = winningResult.calculateTotalPrize();
+    private void printResult(WinningResult result, Budget budget) {
+        WinningReport report = result.toReport();
+        BigDecimal totalPrize = result.calculateTotalPrize();
         Profit profit = Profit.of(totalPrize, budget.getAmount());
-
         outputView.printWinningStatistics(report.entries(), profit);
     }
 }
