@@ -1,6 +1,5 @@
 package lotto.util.validator;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import lotto.common.constant.LottoConstant;
