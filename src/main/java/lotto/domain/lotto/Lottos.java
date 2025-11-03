@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import lotto.dto.PurchasedLotto;
+
 public class Lottos {
     private final List<Lotto> lottos;
 
@@ -16,5 +18,11 @@ public class Lottos {
             .mapToObj(i -> lottoGenerator.generate())
             .collect(Collectors.toList());
         return new Lottos(lottos);
+    }
+
+    public List<PurchasedLotto> toPurchasedLottos() {
+        return lottos.stream()
+            .map(Lotto::toPurchasedLotto)
+            .toList();
     }
 }

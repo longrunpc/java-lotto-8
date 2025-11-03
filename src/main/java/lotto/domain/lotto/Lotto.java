@@ -2,6 +2,7 @@ package lotto.domain.lotto;
 
 import java.util.List;
 
+import lotto.dto.PurchasedLotto;
 import lotto.util.validator.LottoValidator;
 
 public class Lotto {
@@ -18,5 +19,9 @@ public class Lotto {
 
     public List<Integer> getNumbers() {
         return numbers;
+    }
+
+    public PurchasedLotto toPurchasedLotto() {
+        return new PurchasedLotto(List.copyOf(numbers));
     }
 }
