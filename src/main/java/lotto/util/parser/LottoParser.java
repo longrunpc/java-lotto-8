@@ -1,0 +1,22 @@
+package lotto.util.parser;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import lotto.common.message.ErrorMessage;
+
+public class LottoParser {
+    private static final String DELIMITER = ",";
+
+    public static List<Integer> parseWinningNumbers(String input) {
+        try {
+            return Arrays.stream(input.split(DELIMITER))
+                    .map(String::trim)
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_WINNING_NUMBERS.message());
+        }
+    }
+}
