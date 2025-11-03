@@ -1,4 +1,4 @@
-package lotto.common;
+package lotto.common.message;
 
 public enum InputMessage {
     PURCHASE_AMOUNT("구입 금액을 입력해 주세요."),
