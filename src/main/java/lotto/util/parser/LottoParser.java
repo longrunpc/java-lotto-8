@@ -1,5 +1,6 @@
 package lotto.util.parser;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +26,14 @@ public class LottoParser {
             return Integer.parseInt(input.trim());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_BONUS_NUMBER.message());
+        }
+    }
+
+    public static BigDecimal parseBudget(String input) {
+        try {
+            return new BigDecimal(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_AMOUNT.message());
         }
     }
 }
