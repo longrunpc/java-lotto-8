@@ -21,6 +21,7 @@ public class OutputView {
         for (PurchasedLotto purchasedLotto : purchasedLottos) {
             System.out.println(purchasedLotto.lottos());
         }
+        System.out.println();
     }
 
     public void printWinningStatistics(List<WinningReportEntry> entries, Profit totalProfitRate) {
