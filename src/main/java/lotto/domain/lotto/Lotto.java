@@ -2,19 +2,13 @@ package lotto.domain.lotto;
 
 import java.util.List;
 
-import lotto.common.message.ErrorMessage;
+import lotto.util.validator.LottoValidator;
 
 public class Lotto {
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
-        validate(numbers);
+        LottoValidator.validateLottoNumbers(numbers);
         this.numbers = numbers;
-    }
-
-    private void validate(List<Integer> numbers) {
-        if (numbers.size() != 6) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_SIZE.message());
-        }
     }
 }
