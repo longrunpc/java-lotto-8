@@ -2,6 +2,7 @@ package lotto.util.validator;
 
 import java.util.List;
 
+import lotto.common.constant.LottoConstant;
 import lotto.common.message.ErrorMessage;
 
 public final class LottoValidator {
@@ -14,25 +15,25 @@ public final class LottoValidator {
     }
 
     public static void validateBonusNumber(int bonusNumber) {
-        if (bonusNumber < 1 || bonusNumber > 45) {
+        if (bonusNumber < LottoConstant.LOTTO_START_NUMBER || bonusNumber > LottoConstant.LOTTO_END_NUMBER) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_BONUS_NUMBER.message());
         }
     }
 
     public static void validateWinningNumbers(List<Integer> numbers) {
-        if (numbers.size() != 6) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_WINNING_NUMBERS.message());
-        }
+        validateSize(numbers);
+        validateRange(numbers);
+        validateDuplicate(numbers);
     }
 
     private static void validateSize(List<Integer> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != LottoConstant.LOTTO_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_SIZE.message());
         }
     }
 
     private static void validateRange(List<Integer> numbers) {
-        if (numbers.stream().anyMatch(number -> number < 1 || number > 45)) {
+        if (numbers.stream().anyMatch(number -> number < LottoConstant.LOTTO_START_NUMBER || number > LottoConstant.LOTTO_END_NUMBER)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER_RANGE.message());
         }
     }
