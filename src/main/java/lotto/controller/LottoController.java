@@ -45,9 +45,15 @@ public class LottoController {
     }
 
     private Budget requestBudget() {
-        String rawAmount = inputView.readPurchaseAmount();
-        BigDecimal parsedAmount = budgetParser.parseBudget(rawAmount);
-        return Budget.create(parsedAmount);
+        while (true) {
+            try {
+                String rawAmount = inputView.readPurchaseAmount();
+                BigDecimal parsedAmount = budgetParser.parseBudget(rawAmount);
+                return Budget.create(parsedAmount);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     private Lottos purchaseLottos(Budget budget) {
@@ -57,14 +63,39 @@ public class LottoController {
     }
 
     private WinningLotto requestWinningLotto() {
-        String rawWinningNumbers = inputView.readWinningNumbers();
-        String rawBonusNumber = inputView.readBonusNumber();
-
+        String rawWinningNumbers = requestWinningNumbers();
+        String rawBonusNumber = requestBonusNumber();
+    
         return WinningLotto.create(
             lottoParser.parseWinningNumbers(rawWinningNumbers),
             lottoParser.parseBonusNumber(rawBonusNumber)
         );
     }
+    
+    private String requestWinningNumbers() {
+        while (true) {
+            try {
+                String input = inputView.readWinningNumbers();
+                lottoParser.parseWinningNumbers(input);
+                return input;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
+    private String requestBonusNumber() {
+        while (true) {
+            try {
+                String input = inputView.readBonusNumber();
+                lottoParser.parseBonusNumber(input);
+                return input;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
 
     private WinningResult calculateWinningResult(Lottos lottos, WinningLotto winningLotto) {
         return WinningResult.from(lottos, winningLotto);
