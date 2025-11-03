@@ -6,6 +6,8 @@ import java.util.Map;
 
 import lotto.domain.lotto.Lotto;
 import lotto.domain.lotto.Lottos;
+import lotto.dto.WinningReport;
+import lotto.dto.WinningReportEntry;
 
 public class WinningResult {
     
@@ -26,4 +28,23 @@ public class WinningResult {
 
         return new WinningResult(counts);
     }
+
+    public WinningReport toReport() {
+        List<WinningReportEntry> entries = rankCounts.entrySet().stream()
+            .filter(entry -> entry.getKey() != Rank.MISS)
+            .map(entry -> {
+                Rank rank = entry.getKey();
+                int count = entry.getValue();
+                return new WinningReportEntry(
+                    rank.getMatchCount(),
+                    rank.hasBonus(),
+                    rank.getPrize(),
+                    count
+                );
+            })
+            .toList();
+    
+        return new WinningReport(entries);
+    }
+    
 }

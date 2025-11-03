@@ -48,4 +48,12 @@ public enum Rank {
     public int getPrize() {
         return prize;
     }
+
+    public int getMatchCount() {
+        return matchCount;
+    }
+
+    public boolean hasBonus() {
+        return bonusMatch;
+    }
 }
