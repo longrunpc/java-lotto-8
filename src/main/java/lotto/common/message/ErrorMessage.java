@@ -15,6 +15,9 @@ public enum ErrorMessage {
     INVALID_LOTTO_NUMBER_DUPLICATE("[ERROR] 로또 번호는 중복되지 않아야 합니다."),
     INVALID_BONUS_NUMBER_DUPLICATE("[ERROR] 보너스 번호는 당첨번호와 중복되지 않아야 합니다."),
 
+    INVALID_LOTTO_COUNT("[ERROR] 구입 가능한 로또 개수는 1개 이상이어야 합니다."),
+    INVALID_WINNING_LOTTO("[ERROR] 당첨 번호 정보가 누락되었습니다."),
+
     INVALID_LOTTO_CONTROLLER_DEPENDENCY("[ERROR] LottoController 생성에 필요한 의존성이 주입되지 않았습니다."),
     INVALID_LOTTO_CONTROLLER_INJECTION("[ERROR] LottoController 의존성 주입에 실패했습니다.");
 

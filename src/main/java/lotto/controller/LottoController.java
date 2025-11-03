@@ -3,6 +3,7 @@ package lotto.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import lotto.common.message.ErrorMessage;
 import lotto.domain.finance.Budget;
 import lotto.domain.finance.Profit;
 import lotto.domain.lotto.LottoGenerator;
@@ -59,7 +60,12 @@ public class LottoController {
     }
 
     private Lottos purchaseLottos(Budget budget) {
-        Lottos lottos = Lottos.generate(budget.calculateLottoCount(), lottoGenerator);
+        int lottoCount = budget.calculateLottoCount();
+        if (lottoCount <= 0) {
+            throw new IllegalStateException(ErrorMessage.INVALID_LOTTO_COUNT.message());
+        }
+
+        Lottos lottos = Lottos.generate(lottoCount, lottoGenerator);
         outputView.printLottos(lottos.toPurchasedLottos());
         return lottos;
     }
@@ -102,6 +108,12 @@ public class LottoController {
     
 
     private WinningResult calculateWinningResult(Lottos lottos, WinningLotto winningLotto) {
+        if (lottos == null || lottos.getLottos().isEmpty()) {
+            throw new IllegalStateException(ErrorMessage.INVALID_LOTTO_COUNT.message());
+        }
+        if (winningLotto == null) {
+            throw new IllegalStateException(ErrorMessage.INVALID_WINNING_LOTTO.message());
+        }
         return WinningResult.from(lottos, winningLotto);
     }
 
