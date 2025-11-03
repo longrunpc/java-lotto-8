@@ -12,9 +12,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BudgetValidatorTest {
 
-    @DisplayName("0원 및 1000원 단위 금액은 통과한다")
+    @DisplayName("1000원 단위 금액은 통과한다")
     @ParameterizedTest
-    @ValueSource(strings = {"0", "1000", "5000", "123000"})
+    @ValueSource(strings = {"1000", "5000", "123000"})
     void should_pass_when_amount_is_valid_multiple_of_1000(String amount) {
         assertThatNoException()
             .isThrownBy(() -> BudgetValidator.validateBudget(new BigDecimal(amount)));
