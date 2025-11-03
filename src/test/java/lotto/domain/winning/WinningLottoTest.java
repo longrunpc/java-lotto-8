@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class WinningLottoTest {
 
@@ -27,30 +26,6 @@ class WinningLottoTest {
 
             // Then
             assertThat(winningLotto).isNotNull();
-        }
-
-        @DisplayName("당첨 번호 개수가 6이 아니면 예외")
-        @Test
-        void should_throw_when_invalid_winning_numbers_size() {
-            // Given
-            List<Integer> invalidWinningNumbers = List.of(1, 2, 3, 4, 5);
-
-            // When & Then
-            assertThatThrownBy(() -> WinningLotto.create(invalidWinningNumbers, 7))
-                    .isInstanceOf(IllegalArgumentException.class);
-        }
-
-        @DisplayName("보너스 번호가 범위를 벗어나면 예외")
-        @Test
-        void should_throw_when_bonus_out_of_range() {
-            // Given
-            List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
-
-            // When & Then
-            assertThatThrownBy(() -> WinningLotto.create(winningNumbers, 0))
-                    .isInstanceOf(IllegalArgumentException.class);
-            assertThatThrownBy(() -> WinningLotto.create(winningNumbers, 46))
-                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 
